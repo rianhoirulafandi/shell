@@ -116,7 +116,7 @@ const inputOTP = (sessionId, otp, device, nomor, nomorspasi) => new Promise((res
     .catch(err => reject(err))
 });
 
-const register = (device, nomor, token, email, nama1, nama2, reff) => new Promise((resolve, reject) => {
+const register = (device, nomor, token, email, nama1, nama2) => new Promise((resolve, reject) => {
     fetch('https://apac2-api-gateway.capillarytech.com/mobile/v2/api/v2/customers', {
     method: 'POST',
     headers: {
@@ -149,7 +149,7 @@ const register = (device, nomor, token, email, nama1, nama2, reff) => new Promis
             "firstName":nama1,
             "identifiers":[{
                 "type":"mobile",
-                "value":nomor},{"type":"email","value":email}],"lastName":nama2}],"referralCode":`${reff}`,"statusLabel":"Active",
+                "value":nomor},{"type":"email","value":email}],"lastName":nama2}],"referralCode":"GANTIREFFMU","statusLabel":"Active",
         "statusLabelReason":"App Registration"})
 })
     .then(res => res.json())
@@ -174,7 +174,6 @@ while(true){
         const crypto = require("crypto");
         const device = crypto.randomBytes(22).toString("hex")     
         const nomor1 = readline.question(chalk.yellow('\n[-] Nomor : '));
-        const reff = readline.question(chalk.yellow('\n[-] Reff : '));
         const nomor = `62${nomor1}`
         const nomorspasi = `+62 ${nomor1}`
         const getdata = await gettokenOTP(device, nomor)
@@ -190,7 +189,7 @@ while(true){
                 if (inputtOTP.status.success === true) {
                     await delay(2000)
                     const token = inputtOTP.auth.token
-                    const register1 = await register(reff, device, nomor, token, email, nama2, nama1)
+                    const register1 = await register(device, nomor, token, email, nama2, nama1)
                     console.log(register1)
                 }
                 else{
