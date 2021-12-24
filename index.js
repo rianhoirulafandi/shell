@@ -149,7 +149,7 @@ const register = (device, nomor, token, email, nama1, nama2, reff) => new Promis
             "firstName":nama1,
             "identifiers":[{
                 "type":"mobile",
-                "value":nomor},{"type":"email","value":email}],"lastName":nama2}],"referralCode":reff,"statusLabel":"Active",
+                "value":nomor},{"type":"email","value":email}],"lastName":nama2}],"referralCode":`${reff}`,"statusLabel":"Active",
         "statusLabelReason":"App Registration"})
 })
     .then(res => res.json())
